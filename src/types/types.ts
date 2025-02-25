@@ -27,4 +27,10 @@ export type TPostProps = {
   favoritesCount: number;
   slug: string;
   updatedAt: string;
+  article: TTypeArticles;
 };
+
+export interface IListProps {
+  children: React.ReactNode; 
+  className?: string;
+}

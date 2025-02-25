@@ -1,4 +1,5 @@
 import { TPostProps } from "../../types/types";
+import { Link} from "react-router-dom";
 import { format } from "date-fns";
 import styles from "./Post.module.css";
 // import { trimText } from "../utils/utils.js";
@@ -9,16 +10,24 @@ const Post: React.FC<TPostProps> = ({
   title,
   tagList,
   body,
+  slug,
+  article,
   // description,
   // favorited,
   // favoritesCount,
-  // slug,
   // updatedAt,
 }) => {
+  // const navigate  =  useNavigate();
+
+/*   const handleClick = () => {
+    navigate(`/article/${slug}`, { state: { article } });
+  }; */
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>
-        <div className={styles.title}>{title}</div>
+        <Link to={`/article/${slug}`} state={{ article }} /* onClick={handleClick} */ className={styles.title}>
+          {title}
+        </Link>
         <div className={styles.header}>
           <div className={styles.author}>
             <div className={styles.name}>{username}</div>
@@ -26,7 +35,7 @@ const Post: React.FC<TPostProps> = ({
               {date ? format(new Date(date), "MMM dd, yyyy") : null}
             </div>
           </div>
-          <img className={styles.img} src={image || undefined} alt="Author" />
+          <img className={styles.img} src={image || "default-image-url"} alt="Author" />
         </div>
       </div>
       <div className={styles.tag}>
