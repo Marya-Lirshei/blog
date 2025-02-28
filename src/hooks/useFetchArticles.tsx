@@ -5,14 +5,12 @@ import { BaseURL } from "../components/Api/registerUser";
 
 export const useFetchArticles = () => {
     const [articles, setArticles] = useState([]);
-    console.log('articles: ', articles);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   
     const fetchArticles = async (offset = 0, limit = 20) => {
       try {
         let token = localStorage.getItem("authToken");
-        console.log("token: ", token);
         if (!token) {
           token = await loginUser();
         }
@@ -26,7 +24,6 @@ export const useFetchArticles = () => {
             },
           }
         );
-        console.log();
         setArticles(response.data.articles);
       } catch (error) {
         setError("Ошибка при доступе к защищенному ресурсу");

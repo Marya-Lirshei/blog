@@ -1,0 +1,9 @@
+.favoriteSection {
+    display: flex;
+    align-items: center;
+    margin-left: 10px; 
+  }
+  
+  .favoriteSection img {
+    margin-right: 5px; 
+  }

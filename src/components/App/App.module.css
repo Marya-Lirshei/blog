@@ -2,3 +2,9 @@
     background-color: #dce3ee;
     height: 100%;
 }
+
+.wrapper > :nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

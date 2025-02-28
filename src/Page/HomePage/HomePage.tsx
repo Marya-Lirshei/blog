@@ -19,7 +19,7 @@ function HomePage() {
   useEffect(() => {
     const offset = (currentPage - 1) * 20;
     fetchArticles(offset, 20);
-  }, [currentPage, fetchArticles]);
+  }, [currentPage/* , fetchArticles */]);
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Ошибка: {error}</div>;

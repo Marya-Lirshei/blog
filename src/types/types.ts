@@ -34,3 +34,11 @@ export interface IListProps {
   children: React.ReactNode; 
   className?: string;
 }
+
+export type TFavoriteSectionProps = Pick<TTypeArticles, 'favoritesCount'>;
+
+export interface IAuthorSectionProps {
+  username: string;
+  image: string | null;
+  date: string;
+}
