@@ -42,3 +42,11 @@ export interface IAuthorSectionProps {
   image: string | null;
   date: string;
 }
+
+export interface IFormData {
+  username?: string;
+  email: string;
+  password: string;
+  repeatPassword?: string;
+  agreeToTerms?: boolean;
+}
