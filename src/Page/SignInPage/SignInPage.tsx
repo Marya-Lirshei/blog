@@ -24,6 +24,10 @@ const SignIn = () => {
           }
       };
 
+      const goToSignUp = () => {
+        navigate("/sign-up");
+      };
+
   return (
     <div className={styles.container}>
       <div className={styles.form}>
@@ -67,6 +71,12 @@ const SignIn = () => {
             <input type="submit" value="Create" />
           </div>
         </form>
+        <div className={styles.signUpLink}>
+          Don`t have an account?
+          <span className={styles.signUpText} onClick={goToSignUp}>
+            Sign Up
+          </span>
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,6 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-
   const onSubmit = async (userData: IFormData) => {
     const { email, username, password } = userData;
 
@@ -24,6 +23,10 @@ const SignUp = () => {
     } catch (error) {
       console.error("Registration failed:", error);
     }
+  };
+
+  const goToSignIn = () => {
+    navigate("/sign-in");
   };
 
   return (
@@ -129,6 +132,12 @@ const SignUp = () => {
             <input type="submit" value="Create" />
           </div>
         </form>
+        <div className={styles.signInLink}>
+          Already have an account?
+          <span className={styles.signInText} onClick={goToSignIn}>
+            Sign In
+          </span>
+        </div>
       </div>
     </div>
   );

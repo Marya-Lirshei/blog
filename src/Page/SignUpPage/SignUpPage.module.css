@@ -98,3 +98,20 @@
   padding: 5px;
   margin: 0;
 }
+
+.signInLink {
+  color: gray;
+  margin-top: -36px;
+  text-align: center;
+}
+
+.signInText {
+  color: rgb(152, 152, 228); 
+  padding: 5px;
+  cursor: pointer; 
+  text-decoration: underline; 
+}
+
+.signInText:hover {
+  text-decoration: none; 
+}

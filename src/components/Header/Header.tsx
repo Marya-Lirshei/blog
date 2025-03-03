@@ -12,7 +12,7 @@ const Header: React.FC = () => {
       <Link to={`/sign-up`}>
       <button>Sign Up</button>
       </Link>
-      <button>Create article</button>
+      {/* <button>Create article</button> */}
     </div>
   </div>
   );

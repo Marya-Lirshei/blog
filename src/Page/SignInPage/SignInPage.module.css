@@ -98,3 +98,20 @@
     padding: 5px;
     margin: 0;
   }
+
+  .signUpLink {
+    color: gray;
+    margin-top: -36px;
+    text-align: center;
+  }
+  
+  .signUpText {
+    color: rgb(152, 152, 228); 
+    padding: 5px;
+    cursor: pointer; 
+    text-decoration: underline; 
+  }
+  
+  .signUpText:hover {
+    text-decoration: none; 
+  }
