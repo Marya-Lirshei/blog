@@ -5,18 +5,18 @@ import ArticlePage from "../../Page/SlugPage/SlugPage";
 import HomePage from "../../Page/HomePage/HomePage";
 import SignUp from "../../Page/SignUpPage/SignUpPage";
 import SignIn from "../../Page/SignInPage/SignInPage";
+import Profile from "../../Page/ProfilePage/ProfilePage";
 
 const App: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <Header />
-      {/* <List /> */}
-      {/* <HomePage /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/article/:slug" element={<ArticlePage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

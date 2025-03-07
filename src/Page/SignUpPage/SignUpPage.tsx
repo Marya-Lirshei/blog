@@ -2,26 +2,27 @@ import { useForm } from "react-hook-form";
 import styles from "./SignUpPage.module.css";
 import { IFormData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../components/Api/registerUser";
+import { register } from '../../store/reducers/authSlice';
+// import { registerUser } from "../../components/Api/authApi";
+import { useAppDispatch } from "../../hooks/redux";
 
 const SignUp = () => {
   const {
-    register,
+    register: registerForm,
     formState: { errors },
     handleSubmit,
     getValues,
   } = useForm<IFormData>({ mode: "onBlur" });
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = async (userData: IFormData) => {
-    const { email, username, password } = userData;
-
     try {
-      await registerUser({ email, username, password });
-      navigate("/");
+      await dispatch(register(userData)).unwrap();
+      navigate('/');
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error('Registration failed:', error);
     }
   };
 
@@ -36,7 +37,7 @@ const SignUp = () => {
         <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
           <div className={styles.formGroup}>
             <input
-              {...register("username", {
+              {...registerForm("username", {
                 required: "Поле обязательно к заполнению",
                 minLength: {
                   value: 3,
@@ -60,7 +61,7 @@ const SignUp = () => {
 
           <div className={styles.formGroup}>
             <input
-              {...register("email", {
+              {...registerForm("email", {
                 required: "Email is required",
                 pattern: {
                   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
@@ -76,7 +77,7 @@ const SignUp = () => {
 
           <div className={styles.formGroup}>
             <input
-              {...register("password", {
+              {...registerForm("password", {
                 required: "Поле обязательно к заполнению",
                 minLength: {
                   value: 6,
@@ -99,7 +100,7 @@ const SignUp = () => {
 
           <div className={styles.formGroup}>
             <input
-              {...register("repeatPassword", {
+              {...registerForm("repeatPassword", {
                 required: "Поле обязательно к заполнению",
                 validate: (value) =>
                   value === getValues("password") || "Пароли не совпадают",
@@ -117,7 +118,7 @@ const SignUp = () => {
             <label>
               <input
                 type="checkbox"
-                {...register("agreeToTerms", {
+                {...registerForm("agreeToTerms", {
                   required: "Необходимо согласие на обработку данных",
                 })}
               />

@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
 import { IFormData } from "../../types/types";
 import styles from "./SignInPage.module.css";
-import { loginUser } from "../../components/Api/loginUser";
+// import { loginUser } from "../../components/Api/loginUser";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from '../../hooks/redux';
+import { fetchUserProfile, login } from "../../store/reducers/authSlice";
+
 
 const SignIn = () => {
 
@@ -12,17 +15,20 @@ const SignIn = () => {
         handleSubmit,
     } = useForm<IFormData>({ mode: "onBlur" });
     
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
     const onSubmit = async (userData: IFormData) => {
-        const { email, password } = userData;
-        try {
-            await loginUser({ email, password });
-            navigate("/");
-          } catch (error) {
-            console.error("Registration failed:", error);
-          }
-      };
+      try {
+        await dispatch(login(userData)).unwrap();
+        await dispatch(fetchUserProfile()).unwrap();
+        navigate('/');
+
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
+    };
+
 
       const goToSignUp = () => {
         navigate("/sign-up");
