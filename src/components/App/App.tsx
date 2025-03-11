@@ -6,6 +6,7 @@ import HomePage from "../../Page/HomePage/HomePage";
 import SignUp from "../../Page/SignUpPage/SignUpPage";
 import SignIn from "../../Page/SignInPage/SignInPage";
 import Profile from "../../Page/ProfilePage/ProfilePage";
+import CreateArticle from "../../Page/CreateArticlePage/CreateArticlePage";
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <Route path="/article/:slug" element={<ArticlePage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/new-article" element={<CreateArticle />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>

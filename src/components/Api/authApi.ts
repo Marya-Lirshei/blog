@@ -24,7 +24,7 @@ export const getProfile = async () => {
       Authorization: `Token ${token}`,
     },
   });
-  console.log("Response from getProfile:", response.data); // Логирование ответа
+  console.log("Response from getProfile:", response.data);
   return response.data.user;
 };
 
@@ -42,10 +42,26 @@ export const updateProfile = async (userData: Partial<IFormData>) => {
   return response.data.user;
 };
 
+
   // const user: userData = {
   //   user: {
-  //     email: "jake3@gmail.com",
-  //     username: "jake22222223",
-  //     password: "yourpassword3",
+  //     email: "kracozabra@gmail.com",
+  //     username: "Kracozabra",
+  //     password: "88005553535",
   //   },
   // };//4
+  // const user: userData = {
+  //   user: {
+  //     email: "kracozabra1@gmail.com",
+  //     username: "Kracozabra!",
+  //     password: "8800555353588005553535",
+  //   },
+  // };//4
+  // const user: userData = {
+  //   user: {
+  //     email: "lysboaTortuga@gmail.com",
+  //     username: "LysboaTortuga",
+  //     password: "24463546578473a",
+  //   },
+  // };//4
+

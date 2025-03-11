@@ -31,10 +31,8 @@ export const useFetchArticles = () => {
       setTotalPages(Math.ceil(response.data.articlesCount / limit)); //общее кол-во страниц
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Обработка ошибок Axios
         setError(error.response?.data?.message || "Ошибка при загрузке статей");
       } else if (error instanceof Error) {
-        // Обработка других ошибок
         setError(error.message);
       } else {
         setError("Неизвестная ошибка");

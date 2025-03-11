@@ -41,7 +41,7 @@ function HomePage() {
             title={article.title}
             tagList={article.tagList}
             body={article.body}
-            description={article.description}
+            description={article.description}//после тайтла
             favorited={article.favorited}
             favoritesCount={article.favoritesCount}
             slug={article.slug}

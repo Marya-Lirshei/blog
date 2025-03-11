@@ -47,6 +47,7 @@ export interface IFormData {
   username?: string;
   email: string;
   password: string;
+  image?: string;
   repeatPassword?: string;
   agreeToTerms?: boolean;
 }
