@@ -10,12 +10,12 @@ export const useFetchArticles = () => {
   const [totalPages, setTotalPages] = useState(0); // для пагинации
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  
 
   const fetchArticles = async (offset = 0, limit = 20) => {
     try {
       let token = localStorage.getItem("authToken");
       if (!token) {
-       // Если токен отсутствует, перенаправляем на страницу входа
        navigate("/sign-in");
        return;
       }

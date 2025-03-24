@@ -13,7 +13,7 @@ const ArticlePage: React.FC = () => {
   if (!article) return <div>Статья не найдена.</div>;
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={styles.articleCard}>
         <div className={styles.articleInfo}>
           <div className={styles.titleSection}>
@@ -33,6 +33,11 @@ const ArticlePage: React.FC = () => {
             </span>
           ))}
         </div>
+        <div className={styles.articleDescription}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          {article.description}
+        </ReactMarkdown>
+      </div>
         <div className={styles.articleBody}>
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}

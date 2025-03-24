@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IFormData } from '../../types/types';
+import { IFormData, TCreateArticle } from '../../types/types';
 
 export const BaseURL = 'https://blog-platform.kata.academy/api/';
 
@@ -20,11 +20,10 @@ export const loginUser = async (userData: IFormData) => {
 export const getProfile = async () => {
   const token = localStorage.getItem('authToken');
   const response = await axios.get(`${BaseURL}user`, {
-    headers: {
-      Authorization: `Token ${token}`,
+    headers: {      Authorization: `Token ${token}`,
     },
   });
-  console.log("Response from getProfile:", response.data);
+  // console.log("Response from getProfile:", response.data);
   return response.data.user;
 };
 
@@ -43,6 +42,20 @@ export const updateProfile = async (userData: Partial<IFormData>) => {
 };
 
 
+export const createArticle= async (articleData: Partial<TCreateArticle>)=>{
+  const token = localStorage.getItem('authToken');
+  const response = await axios.post( `${BaseURL}articles`,
+  { article: articleData },
+  {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  }
+  )
+  console.log('response.data.article: ', response.data.article);
+  return response.data.article;
+}
+
   // const user: userData = {
   //   user: {
   //     email: "kracozabra@gmail.com",
@@ -59,8 +72,8 @@ export const updateProfile = async (userData: Partial<IFormData>) => {
   // };//4
   // const user: userData = {
   //   user: {
-  //     email: "lysboaTortuga@gmail.com",
-  //     username: "LysboaTortuga",
+  //     email: "tortugaprun@gmail.com",
+  //     username: "lysbo3786992",
   //     password: "24463546578473a",
   //   },
   // };//4

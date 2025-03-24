@@ -31,11 +31,11 @@ export type TPostProps = {
 };
 
 export interface IListProps {
-  children: React.ReactNode; 
+  children: React.ReactNode;
   className?: string;
 }
 
-export type TFavoriteSectionProps = Pick<TTypeArticles, 'favoritesCount'>;
+export type TFavoriteSectionProps = Pick<TTypeArticles, "favoritesCount">;
 
 export interface IAuthorSectionProps {
   username: string;
@@ -51,3 +51,10 @@ export interface IFormData {
   repeatPassword?: string;
   agreeToTerms?: boolean;
 }
+
+export type TCreateArticle = {
+  title: string;
+  description: string;
+  body: string;
+  tagList: string[];
+};

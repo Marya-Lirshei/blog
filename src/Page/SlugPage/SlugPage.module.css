@@ -1,3 +1,7 @@
+.wrapper {
+  height: 100vh;
+}
+
 .articleCard {
   display: flex;
   flex-direction: column;
@@ -30,19 +34,17 @@
   overflow-wrap: break-word;
 }
 
-
-.tagsList{
+.tagsList {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   color: #7991ac;
-  
 }
 
-.tagsList span{
-  border: 1px solid #262729; 
-  
-  padding: 3px; 
+.tagsList span {
+  border: 1px solid #262729;
+
+  padding: 3px;
   border-radius: 4px;
 
   /* overflow-wrap: break-word; */

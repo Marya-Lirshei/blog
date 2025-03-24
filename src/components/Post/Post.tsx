@@ -13,10 +13,10 @@ const Post: React.FC<TPostProps> = ({
   date,
   title,
   tagList,
-  body,
+  // body,
   slug,
   article,
-  // description,
+  description,
   // favorited,
   favoritesCount,
   // updatedAt,
@@ -48,9 +48,9 @@ const Post: React.FC<TPostProps> = ({
           </span>
         ))}
       </div>
-      <div className={styles.articleBody}>
+      <div className={styles.articleDescription}>
         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-          {body}
+          {description}
         </ReactMarkdown>
       </div>
     </div>
