@@ -52,9 +52,13 @@ export interface IFormData {
   agreeToTerms?: boolean;
 }
 
+export type TTagItem = {
+  id: string;
+  nameTag: string;
+};
 export type TCreateArticle = {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tagList: TTagItem[];
 };
