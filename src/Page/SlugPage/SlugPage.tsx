@@ -1,17 +1,26 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SlugPage.module.css";
 import FavoriteSection from "../../components/FavoriteSection/FavoriteSection";
 import AuthorSection from "../../components/AuthorSection/AuthorSection";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { useAppSelector } from "../../hooks/redux";
 
 const ArticlePage: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { article } = location.state || {};
+  const currentUser = useAppSelector((state) => state.auth.user);
+  console.log("currentUser: ", currentUser);
+  console.log("🐯 ~ article:", article);
 
   if (!article) return <div>Статья не найдена.</div>;
+  const handleEdit = () => {
+    navigate("/articles/{slug}/edit", { state: { article } });
+  };
 
+  const isAuthor = currentUser?.username === article.author.username;
   return (
     <div className={styles.wrapper}>
       <div className={styles.articleCard}>
@@ -34,10 +43,13 @@ const ArticlePage: React.FC = () => {
           ))}
         </div>
         <div className={styles.articleDescription}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-          {article.description}
-        </ReactMarkdown>
-      </div>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+          >
+            {article.description}
+          </ReactMarkdown>
+        </div>
         <div className={styles.articleBody}>
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -45,6 +57,19 @@ const ArticlePage: React.FC = () => {
           >
             {article.body}
           </ReactMarkdown>
+          {isAuthor && (
+            <div className={styles.articleButton}>
+              <button className={styles.editButton} onClick={handleEdit}>
+                Edit Article
+              </button>
+              <button
+                className={styles.deleteButton}
+                // onClick={handleDelete}
+              >
+                Delete Article
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

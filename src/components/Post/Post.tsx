@@ -29,7 +29,7 @@ const Post: React.FC<TPostProps> = ({
   return (
     <div className={styles.articleCard}>
       <div className={styles.articleInfo}>
-        <div className={styles.titleSection}>
+        <div className={styles.titleSection}>  
           <Link
             to={`/article/${slug}`}
             state={{ article }}

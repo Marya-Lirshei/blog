@@ -52,13 +52,16 @@ export interface IFormData {
   agreeToTerms?: boolean;
 }
 
-export type TTagItem = {
-  id: string;
-  nameTag: string;
-};
+export interface ArticleApiData {
+  title: string;
+  description: string;
+  body: string;
+  tagList: string[];
+}
+
 export type TCreateArticle = {
   title: string;
   description: string;
   body: string;
-  tagList: TTagItem[];
+  tagList: Array<{ id: string; nameTag: string }>;
 };

@@ -1,22 +1,33 @@
-// import { useFieldArray, useForm } from "react-hook-form";
-import { useState } from "react";
-import styles from "./CreateArticlePage.module.css";
-import { TCreateArticle } from "../../types/types";
-import {createArticle} from "../../components/Api/authApi"
-import { useNavigate } from "react-router-dom";
-import { useFetchArticles } from "../../hooks/useFetchArticles";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import { useFetchArticles } from "../../hooks/useFetchArticles";
+import { createArticle, updateArticle } from "../../components/Api/authApi";
+import { ArticleApiData, TCreateArticle } from "../../types/types";
+
+import styles from "./CreateArticlePage.module.css";
 
 const CreateArticle = () => {
+  const location = useLocation();
+  console.log("location: ", location);
+  const { article } = location.state || {};
+  console.log("article: ", article);
+  const { slug } = useParams();
+  console.log("slug: ", slug);
+  const isEditMode = !!article;
+  console.log("isEditMode: ", isEditMode);
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
     watch,
+    reset,
   } = useForm<TCreateArticle>({
     defaultValues: {
-      tagList: [{ id: Date.now().toString(), nameTag: "" }], // Один пустой тег по умолчанию
+      tagList: [{ id: Date.now().toString(), nameTag: "" }], // 1 пустой тег по умолчанию
     },
   });
 
@@ -25,39 +36,66 @@ const CreateArticle = () => {
     name: "tagList",
   });
 
-  const [ error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const { fetchArticles } = useFetchArticles();
-   
+
+  useEffect(() => {
+    if (isEditMode && article) {
+      reset({
+        // title: article.title,
+        // description: article.description,
+        // body: article.body,
+        // tagList: article.tagList.map((tag) => ({
+        //   id: Date.now().toString(),
+        //   nameTag: tag,
+        ...article,
+        tagList: article.tagList.map((tag:string, index:number) => ({
+          id: (Date.now() + index).toString(),
+          nameTag: tag,
+        })),
+      });
+    }
+  }, [isEditMode, article, reset]);
+
   const onSubmit = async (data: TCreateArticle) => {
     try {
-      const articleData = {
-        ...data, 
+      const articleData: ArticleApiData = {
+        ...data,
         tagList: data.tagList
-        .map(item => item.nameTag)  // преобр в string[]
-        .filter(tag => tag.trim() !== ""),  
+          .map((item) => item.nameTag) // преобр в string[]
+          .filter((tag) => tag.trim() !== ""),
       };
-      await createArticle(articleData);
+      if (isEditMode) {
+        await updateArticle(article.slug, articleData);
+        console.log('article.slug: ', article.slug);
+      } else {
+        await createArticle(articleData as unknown as Partial<TCreateArticle>);
+      }
       await fetchArticles();
       navigate("/");
     } catch (error) {
-      setError("Ошибка при создании статьи");
-      console.error("Ошибка при создании статьи:", error);
+      setError(
+        isEditMode
+          ? "Ошибка при обновлении статьи"
+          : "Ошибка при создании статьи"
+      );
+      console.error("Ошибка:", error);
     }
   };
 
-  const showError = (message: string)=>{
-    setError(message)
-    setTimeout(()=>{
-      setError("")
-    }, 3000)
-  }
+  const showError = (message: string) => {
+    setError(message);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
 
   const addTag = () => {
     if (fields.length > 0) {
       const lastTagValue = watch(`tagList.${fields.length - 1}.nameTag`);
-      console.log('lastTagValue: ', lastTagValue);
+      console.log("lastTagValue: ", lastTagValue);
       if (!lastTagValue?.trim()) {
         showError("Заполните текущий тег перед добавлением нового");
         return;
@@ -66,30 +104,20 @@ const CreateArticle = () => {
     append({ id: Date.now().toString(), nameTag: "" });
   };
 
-  // const deleteTag = (index: number) => {
-  //   const newTags = [...tags];
-  //   newTags.splice(index, 1);
-  //   setTags(newTags);
-  // };
-
-  // const handleTagChange = (index: number, value: string) => {
-  //   const newTags = [...tags];
-  //   newTags[index] = value;
-  //   setTags(newTags);
-  // };
-
   return (
     <div>
       <div className={styles.container}>
         <div className={styles.form}>
-          <h1>Create new article</h1>
+          <h1>{isEditMode ? "Edit article" : "Create new article"}</h1>
           {error && <div className={styles.errorMessage}>{error}</div>}
-          <form className={styles.formWrapper} onSubmit={handleSubmit(onSubmit)} >
+          <form
+            className={styles.formWrapper}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className={styles.formGroup}>
               <input
                 className={styles.formControl}
                 placeholder=" "
-                // name="title"
                 {...register("title", { required: "Title is required" })}
               />
               <label className={styles.formLabel}>Title</label>
@@ -102,7 +130,6 @@ const CreateArticle = () => {
               <input
                 className={styles.formControl}
                 placeholder=" "
-                // name="description"
                 {...register("description", {
                   required: "Description is required",
                 })}
@@ -119,7 +146,6 @@ const CreateArticle = () => {
               <input
                 className={`${styles.formControl} ${styles.addInputText}`}
                 placeholder=" "
-                // name="body" 
                 {...register("body", { required: "Text is required" })}
               />
               <label className={styles.formLabel}>Text</label>
@@ -128,26 +154,27 @@ const CreateArticle = () => {
               )}
             </div>
 
-            
             <div className={styles.formTags}>
               {fields.map((field, index) => (
-                <div key={field.id} className={`${styles.formGroup} ${styles.formGroupTag}`}>
+                <div
+                  key={field.id}
+                  className={`${styles.formGroup} ${styles.formGroupTag}`}
+                >
                   <input
                     className={`${styles.formControl} ${styles.addTagName}`}
-                    placeholder=" " 
+                    placeholder=" "
                     {...register(`tagList.${index}.nameTag`)}
                     defaultValue={field.nameTag}
-                    // onChange={(e) => handleTagChange(index, e.target.value)}
                   />
                   <label className={styles.formLabel}>Tag {index + 1}</label>
                   {index > 0 && (
-                  <button
-                    type="button"
-                    className={styles.buttonDelete}
-                    onClick={() => remove(index)}
-                  >
-                    Delete
-                  </button>
+                    <button
+                      type="button"
+                      className={styles.buttonDelete}
+                      onClick={() => remove(index)}
+                    >
+                      Delete
+                    </button>
                   )}
                 </div>
               ))}
