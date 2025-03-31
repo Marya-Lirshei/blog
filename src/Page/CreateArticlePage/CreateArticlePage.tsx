@@ -44,12 +44,6 @@ const CreateArticle = () => {
   useEffect(() => {
     if (isEditMode && article) {
       reset({
-        // title: article.title,
-        // description: article.description,
-        // body: article.body,
-        // tagList: article.tagList.map((tag) => ({
-        //   id: Date.now().toString(),
-        //   nameTag: tag,
         ...article,
         tagList: article.tagList.map((tag:string, index:number) => ({
           id: (Date.now() + index).toString(),

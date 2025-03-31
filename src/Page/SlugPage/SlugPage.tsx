@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+  import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SlugPage.module.css";
 import FavoriteSection from "../../components/FavoriteSection/FavoriteSection";
 import AuthorSection from "../../components/AuthorSection/AuthorSection";
@@ -6,6 +6,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useAppSelector } from "../../hooks/redux";
+import { deleteArticle } from "../../components/Api/authApi";
+import { useFetchArticles } from "../../hooks/useFetchArticles";
 
 const ArticlePage: React.FC = () => {
   const location = useLocation();
@@ -14,11 +16,17 @@ const ArticlePage: React.FC = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
   console.log("currentUser: ", currentUser);
   console.log("🐯 ~ article:", article);
-
+  const { fetchArticles } = useFetchArticles();
   if (!article) return <div>Статья не найдена.</div>;
   const handleEdit = () => {
     navigate("/articles/{slug}/edit", { state: { article } });
   };
+
+  const handleDelete= async() =>{
+    await deleteArticle(article.slug)
+    await fetchArticles();
+    navigate("/");
+  }
 
   const isAuthor = currentUser?.username === article.author.username;
   return (
@@ -64,7 +72,7 @@ const ArticlePage: React.FC = () => {
               </button>
               <button
                 className={styles.deleteButton}
-                // onClick={handleDelete}
+                onClick={handleDelete}
               >
                 Delete Article
               </button>

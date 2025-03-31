@@ -77,6 +77,26 @@ export const updateArticle = async (
     throw error;
   }
 };
+export const deleteArticle = async (
+  slug: string,
+  // articleData: ArticleApiData
+) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) throw new Error("Authentication required");
+  try {
+    const response = await axios.delete(`${BaseURL}articles/${slug}`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+      // data: { article: articleData }, 
+    });
+    console.log("response.data.article: ", response.data.article);
+    return response.data.article;
+  } catch (error) {
+    console.error("Error updating article:", error);
+    throw error;
+  }
+};
 
 // const user: userData = {
 //   user: {
