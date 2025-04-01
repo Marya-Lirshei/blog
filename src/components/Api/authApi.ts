@@ -78,7 +78,7 @@ export const updateArticle = async (
   }
 };
 export const deleteArticle = async (
-  slug: string,
+  slug: string
   // articleData: ArticleApiData
 ) => {
   const token = localStorage.getItem("authToken");
@@ -88,7 +88,43 @@ export const deleteArticle = async (
       headers: {
         Authorization: `Token ${token}`,
       },
-      // data: { article: articleData }, 
+      // data: { article: articleData },
+    });
+    console.log("response.data.article: ", response.data.article);
+    return response.data.article;
+  } catch (error) {
+    console.error("Error updating article:", error);
+    throw error;
+  }
+};
+export const favoriteArticle = async (slug: string) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) throw new Error("Authentication required");
+  try {
+    const response = await axios.post(
+      `${BaseURL}articles/${slug}/favorite`,
+      {}, // пустое тело запроса
+      {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+    );
+    console.log("response.data.article: ", response.data.article);
+    return response.data.article;
+  } catch (error) {
+    console.error("Error updating article:", error);
+    throw error;
+  }
+};
+export const unFavoriteArticle = async (slug: string) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) throw new Error("Authentication required");
+  try {
+    const response = await axios.delete(`${BaseURL}articles/${slug}/favorite`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
     });
     console.log("response.data.article: ", response.data.article);
     return response.data.article;

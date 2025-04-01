@@ -35,7 +35,10 @@ const ArticlePage: React.FC = () => {
         <div className={styles.articleInfo}>
           <div className={styles.titleSection}>
             <div className={styles.articleTitle}>{article.title}</div>
-            <FavoriteSection favoritesCount={article.favoritesCount} />
+            <FavoriteSection favoritesCount={article.favoritesCount}
+            slug={article.slug} 
+            favorited={article.favorited}
+/>
           </div>
           <AuthorSection
             username={article.author.username}

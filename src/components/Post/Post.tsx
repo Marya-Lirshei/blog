@@ -17,7 +17,7 @@ const Post: React.FC<TPostProps> = ({
   slug,
   article,
   description,
-  // favorited,
+  favorited,
   favoritesCount,
   // updatedAt,
 }) => {
@@ -37,7 +37,9 @@ const Post: React.FC<TPostProps> = ({
           >
             {title}
           </Link>
-          <FavoriteSection favoritesCount={favoritesCount} />
+          <FavoriteSection favoritesCount={favoritesCount}
+          slug={slug} 
+          favorited={favorited}/>
         </div>
         <AuthorSection username={username} image={image} date={date} />
       </div>

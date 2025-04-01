@@ -35,7 +35,11 @@ export interface IListProps {
   className?: string;
 }
 
-export type TFavoriteSectionProps = Pick<TTypeArticles, "favoritesCount">;
+export type TFavoriteSectionProps = {
+  favoritesCount: number;
+  slug: string;
+  favorited:boolean
+};
 
 export interface IAuthorSectionProps {
   username: string;
