@@ -6,7 +6,6 @@
 .list .post {
   width: 100%;
   max-width: 940px;
-  /* max-height: 140px; */
 }
 
 .loading {
@@ -20,4 +19,3 @@
   font-size: 18px;
   color: #ff4d4f;
 }
-

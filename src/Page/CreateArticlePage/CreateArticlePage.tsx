@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useFetchArticles } from "../../hooks/useFetchArticles";
 import { createArticle, updateArticle } from "../../components/Api/authApi";
@@ -10,13 +10,8 @@ import styles from "./CreateArticlePage.module.css";
 
 const CreateArticle = () => {
   const location = useLocation();
-  console.log("location: ", location);
   const { article } = location.state || {};
-  console.log("article: ", article);
-  const { slug } = useParams();
-  console.log("slug: ", slug);
   const isEditMode = !!article;
-  console.log("isEditMode: ", isEditMode);
 
   const {
     register,
@@ -45,7 +40,7 @@ const CreateArticle = () => {
     if (isEditMode && article) {
       reset({
         ...article,
-        tagList: article.tagList.map((tag:string, index:number) => ({
+        tagList: article.tagList.map((tag: string, index: number) => ({
           id: (Date.now() + index).toString(),
           nameTag: tag,
         })),
@@ -63,7 +58,7 @@ const CreateArticle = () => {
       };
       if (isEditMode) {
         await updateArticle(article.slug, articleData);
-        console.log('article.slug: ', article.slug);
+        console.log("article.slug: ", article.slug);
       } else {
         await createArticle(articleData as unknown as Partial<TCreateArticle>);
       }

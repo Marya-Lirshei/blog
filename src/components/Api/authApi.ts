@@ -22,7 +22,6 @@ export const getProfile = async () => {
   const response = await axios.get(`${BaseURL}user`, {
     headers: { Authorization: `Token ${token}` },
   });
-  // console.log("Response from getProfile:", response.data);
   return response.data.user;
 };
 
@@ -51,7 +50,6 @@ export const createArticle = async (articleData: Partial<TCreateArticle>) => {
       },
     }
   );
-  console.log("response.data.article: ", response.data.article);
   return response.data.article;
 };
 export const updateArticle = async (
@@ -70,17 +68,13 @@ export const updateArticle = async (
         },
       }
     );
-    console.log("response.data.article: ", response.data.article);
     return response.data.article;
   } catch (error) {
     console.error("Error updating article:", error);
     throw error;
   }
 };
-export const deleteArticle = async (
-  slug: string
-  // articleData: ArticleApiData
-) => {
+export const deleteArticle = async (slug: string) => {
   const token = localStorage.getItem("authToken");
   if (!token) throw new Error("Authentication required");
   try {
@@ -88,9 +82,7 @@ export const deleteArticle = async (
       headers: {
         Authorization: `Token ${token}`,
       },
-      // data: { article: articleData },
     });
-    console.log("response.data.article: ", response.data.article);
     return response.data.article;
   } catch (error) {
     console.error("Error updating article:", error);
@@ -110,7 +102,6 @@ export const favoriteArticle = async (slug: string) => {
         },
       }
     );
-    console.log("response.data.article: ", response.data.article);
     return response.data.article;
   } catch (error) {
     console.error("Error updating article:", error);
@@ -126,32 +117,9 @@ export const unFavoriteArticle = async (slug: string) => {
         Authorization: `Token ${token}`,
       },
     });
-    console.log("response.data.article: ", response.data.article);
     return response.data.article;
   } catch (error) {
     console.error("Error updating article:", error);
     throw error;
   }
 };
-
-// const user: userData = {
-//   user: {
-//     email: "kracozabra@gmail.com",
-//     username: "Kracozabra",
-//     password: "88005553535",
-//   },
-// };//4
-// const user: userData = {
-//   user: {
-//     email: "kracozabra1@gmail.com",
-//     username: "Kracozabra!",
-//     password: "8800555353588005553535",
-//   },
-// };//4
-// const user: userData = {
-//   user: {
-//     email: "tortugaprun@gmail.com",
-//     username: "lysbo3786992",
-//     password: "24463546578473a",
-//   },
-// };//4

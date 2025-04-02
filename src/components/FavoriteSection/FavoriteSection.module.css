@@ -7,28 +7,27 @@
   margin-left: 10px;
 }
 
-/* .favoriteSection:hover {
-  background-color: rgba(220, 53, 69, 0.1);
-}  */
-
-/* .favoriteSection img {
-  width: 16px;
-  height: 16px;
-  transition: all 0.3s ease;
-} */
-
-
 .favoriteSection:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
 @keyframes heartBeat {
-  0% { transform: scale(1); }
-  25% { transform: scale(1.2); }
-  50% { transform: scale(0.95); }
-  75% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .favoriteSection.favorited img {

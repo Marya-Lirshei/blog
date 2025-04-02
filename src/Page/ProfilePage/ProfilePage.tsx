@@ -13,7 +13,7 @@ const Profile = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const {
-    register : update,
+    register: update,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormData>({ mode: "onBlur" });
@@ -22,10 +22,10 @@ const Profile = () => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-    const handleUpdateProfile = (updatedData: Partial<IFormData>) => {
-      dispatch(updateUserProfile(updatedData));
-      console.log(JSON.stringify(updatedData));
-    };
+  const handleUpdateProfile = (updatedData: Partial<IFormData>) => {
+    dispatch(updateUserProfile(updatedData));
+    console.log(JSON.stringify(updatedData));
+  };
 
   if (!user) {
     return <div>Loading...</div>;
@@ -34,8 +34,11 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-      <h1>Edit Profile</h1>
-        <form onSubmit={handleSubmit(handleUpdateProfile)} className={styles.formWrapper}>
+        <h1>Edit Profile</h1>
+        <form
+          onSubmit={handleSubmit(handleUpdateProfile)}
+          className={styles.formWrapper}
+        >
           <div className={styles.formGroup}>
             <input
               {...update("username", {
@@ -104,7 +107,8 @@ const Profile = () => {
             <input
               {...update("image", {
                 pattern: {
-                  value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                  value:
+                    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
                   message: "Некорректный URL",
                 },
               })}

@@ -6,30 +6,22 @@ import AuthorSection from "../AuthorSection/AuthorSection";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-// import { trimText } from "../utils/utils.js";
 const Post: React.FC<TPostProps> = ({
   username,
   image,
   date,
   title,
   tagList,
-  // body,
   slug,
   article,
   description,
   favorited,
   favoritesCount,
-  // updatedAt,
 }) => {
-  // const navigate  =  useNavigate();
-
-  /*   const handleClick = () => {
-    navigate(`/article/${slug}`, { state: { article } });
-  }; */
   return (
     <div className={styles.articleCard}>
       <div className={styles.articleInfo}>
-        <div className={styles.titleSection}>  
+        <div className={styles.titleSection}>
           <Link
             to={`/article/${slug}`}
             state={{ article }}
@@ -37,9 +29,11 @@ const Post: React.FC<TPostProps> = ({
           >
             {title}
           </Link>
-          <FavoriteSection favoritesCount={favoritesCount}
-          slug={slug} 
-          favorited={favorited}/>
+          <FavoriteSection
+            favoritesCount={favoritesCount}
+            slug={slug}
+            favorited={favorited}
+          />
         </div>
         <AuthorSection username={username} image={image} date={date} />
       </div>

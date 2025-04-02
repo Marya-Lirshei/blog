@@ -1,4 +1,4 @@
-  import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SlugPage.module.css";
 import FavoriteSection from "../../components/FavoriteSection/FavoriteSection";
 import AuthorSection from "../../components/AuthorSection/AuthorSection";
@@ -12,21 +12,22 @@ import { useFetchArticles } from "../../hooks/useFetchArticles";
 const ArticlePage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { article } = location.state || {};
-  const currentUser = useAppSelector((state) => state.auth.user);
-  console.log("currentUser: ", currentUser);
-  console.log("🐯 ~ article:", article);
   const { fetchArticles } = useFetchArticles();
+
+  const { article } = location.state || {};
+
+  const currentUser = useAppSelector((state) => state.auth.user);
+
   if (!article) return <div>Статья не найдена.</div>;
   const handleEdit = () => {
     navigate("/articles/{slug}/edit", { state: { article } });
   };
 
-  const handleDelete= async() =>{
-    await deleteArticle(article.slug)
+  const handleDelete = async () => {
+    await deleteArticle(article.slug);
     await fetchArticles();
     navigate("/");
-  }
+  };
 
   const isAuthor = currentUser?.username === article.author.username;
   return (
@@ -35,10 +36,11 @@ const ArticlePage: React.FC = () => {
         <div className={styles.articleInfo}>
           <div className={styles.titleSection}>
             <div className={styles.articleTitle}>{article.title}</div>
-            <FavoriteSection favoritesCount={article.favoritesCount}
-            slug={article.slug} 
-            favorited={article.favorited}
-/>
+            <FavoriteSection
+              favoritesCount={article.favoritesCount}
+              slug={article.slug}
+              favorited={article.favorited}
+            />
           </div>
           <AuthorSection
             username={article.author.username}
@@ -73,10 +75,7 @@ const ArticlePage: React.FC = () => {
               <button className={styles.editButton} onClick={handleEdit}>
                 Edit Article
               </button>
-              <button
-                className={styles.deleteButton}
-                onClick={handleDelete}
-              >
+              <button className={styles.deleteButton} onClick={handleDelete}>
                 Delete Article
               </button>
             </div>

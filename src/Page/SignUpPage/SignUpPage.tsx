@@ -2,8 +2,7 @@ import { useForm } from "react-hook-form";
 import styles from "./SignUpPage.module.css";
 import { IFormData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
-import { register } from '../../store/reducers/authSlice';
-// import { registerUser } from "../../components/Api/authApi";
+import { register } from "../../store/reducers/authSlice";
 import { useAppDispatch } from "../../hooks/redux";
 
 const SignUp = () => {
@@ -20,9 +19,9 @@ const SignUp = () => {
   const onSubmit = async (userData: IFormData) => {
     try {
       await dispatch(register(userData)).unwrap();
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error("Registration failed:", error);
     }
   };
 

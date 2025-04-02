@@ -9,7 +9,6 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
-  console.log('user: ', user);
 
   useEffect(() => {
     if (isAuthenticated) {

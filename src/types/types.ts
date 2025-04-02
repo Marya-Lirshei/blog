@@ -38,7 +38,7 @@ export interface IListProps {
 export type TFavoriteSectionProps = {
   favoritesCount: number;
   slug: string;
-  favorited:boolean
+  favorited: boolean;
 };
 
 export interface IAuthorSectionProps {

@@ -21,36 +21,33 @@
 }
 
 .articleTitle {
-  flex:1;
+  flex: 1;
   font-size: 20px;
   color: #35ac88;
   overflow-wrap: break-word;
 }
 
-.tagsList{
+.tagsList {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   color: #7991ac;
-  
 }
 
-.tagsList span{
-  border: 1px solid #262729; 
-  
-  padding: 3px; 
-  border-radius: 4px;
+.tagsList span {
+  border: 1px solid #262729;
 
+  padding: 3px;
+  border-radius: 4px;
 }
 
 .articleDescription {
   max-height: 100px;
   width: 80%;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
-  /* overflow-wrap: break-word; */
 }
 
-.articleBody p, h1 {
+.articleBody p,
+h1 {
   margin: 0;
 }

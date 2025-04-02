@@ -60,7 +60,7 @@
   margin: 0;
 }
 
-.articleButton{
+.articleButton {
   display: flex;
   justify-content: end;
   gap: 10px;
@@ -77,6 +77,6 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.deleteButton{
+.deleteButton {
   background-color: rgb(238, 138, 138);
 }

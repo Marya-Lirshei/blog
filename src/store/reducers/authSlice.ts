@@ -1,10 +1,14 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { IFormData } from '../../types/types';
-import { getProfile, loginUser, registerUser, updateProfile } from '../../components/Api/authApi';// Объединила API в один файл
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { IFormData } from "../../types/types";
+import {
+  getProfile,
+  loginUser,
+  registerUser,
+  updateProfile,
+} from "../../components/Api/authApi"; // Объединила API в один файл
 
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (userData: IFormData, { rejectWithValue }) => {
     try {
       const token = await loginUser(userData);
@@ -13,13 +17,13 @@ export const login = createAsyncThunk(
       if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
-      return rejectWithValue('Произошла неизвестная ошибка');
+      return rejectWithValue("Произошла неизвестная ошибка");
     }
   }
 );
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userData: IFormData, { rejectWithValue }) => {
     try {
       const response = await registerUser(userData);
@@ -28,13 +32,13 @@ export const register = createAsyncThunk(
       if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
-      return rejectWithValue('Произошла неизвестная ошибка');
+      return rejectWithValue("Произошла неизвестная ошибка");
     }
   }
 );
 
 export const fetchUserProfile = createAsyncThunk(
-  'auth/fetchUserProfile',
+  "auth/fetchUserProfile",
   async (_, { rejectWithValue }) => {
     try {
       const user = await getProfile();
@@ -43,13 +47,13 @@ export const fetchUserProfile = createAsyncThunk(
       if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
-      return rejectWithValue('Произошла неизвестная ошибка');
+      return rejectWithValue("Произошла неизвестная ошибка");
     }
   }
 );
 
 export const updateUserProfile = createAsyncThunk(
-  'auth/updateUserProfile',
+  "auth/updateUserProfile",
   async (userData: Partial<IFormData>, { rejectWithValue }) => {
     try {
       const user = await updateProfile(userData);
@@ -58,16 +62,21 @@ export const updateUserProfile = createAsyncThunk(
       if (error instanceof Error) {
         return rejectWithValue(error.message);
       }
-      return rejectWithValue('Произошла неизвестная ошибка');
+      return rejectWithValue("Произошла неизвестная ошибка");
     }
   }
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    isAuthenticated: !!localStorage.getItem('authToken'),
-    user: null as { username: string; email: string; image: string; password: string } | null,
+    isAuthenticated: !!localStorage.getItem("authToken"),
+    user: null as {
+      username: string;
+      email: string;
+      image: string;
+      password: string;
+    } | null,
     loading: false,
     error: null as string | null,
   },
@@ -75,25 +84,25 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
-      localStorage.removeItem('authToken');
+      localStorage.removeItem("authToken");
     },
   },
   extraReducers: (builder) => {
     builder
-    .addCase(login.fulfilled, (state, action) => {
-      state.isAuthenticated = true;
-      localStorage.setItem('authToken', action.payload);
-    })
-    .addCase(register.fulfilled, (state, action) => {
-      state.isAuthenticated = true;
-      localStorage.setItem('authToken', action.payload);
-    })
-    .addCase(fetchUserProfile.fulfilled, (state, action) => {
-      state.user = action.payload;
-    })
-    .addCase(updateUserProfile.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
+      .addCase(login.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        localStorage.setItem("authToken", action.payload);
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        localStorage.setItem("authToken", action.payload);
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      });
   },
 });
 

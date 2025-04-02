@@ -1,7 +1,7 @@
 import { TFavoriteSectionProps } from "../../types/types";
 import styles from "./FavoriteSection.module.css";
 import heart from "../../../public/heart.svg";
-import heardRed from "../../../public/heartRed.svg"
+import heardRed from "../../../public/heartRed.svg";
 import { useState } from "react";
 import { favoriteArticle, unFavoriteArticle } from "../Api/authApi";
 
@@ -10,7 +10,7 @@ const FavoriteSection: React.FC<TFavoriteSectionProps> = ({
   slug,
   favorited: initialFavorited,
 }) => {
-  const [favorited, setFavorited] = useState(initialFavorited); 
+  const [favorited, setFavorited] = useState(initialFavorited);
   const [favoritesCount, setFavoritesCount] = useState(initialFavoritesCount);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,7 +21,6 @@ const FavoriteSection: React.FC<TFavoriteSectionProps> = ({
     try {
       if (favorited) {
         const article = await unFavoriteArticle(slug);
-        console.log('article: ', article);
         setFavoritesCount(article.favoritesCount);
         setFavorited(article.favorited);
       } else {

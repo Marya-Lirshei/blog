@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useFetchArticles } from "../../hooks/useFetchArticles";
-// import styles from "./List.module.css";
 import { Pagination } from "antd";
 import { useSearchParams } from "react-router-dom";
 import Post from "../../components/Post/Post";
@@ -15,7 +14,6 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   const { articles, loading, error, totalPages, fetchArticles } = useFetchArticles();
-  console.log("articles: ", articles);
 
   useEffect(() => {
     const offset = (currentPage - 1) * 20;
