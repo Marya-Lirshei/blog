@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BaseURL } from "../components/Api/authApi";
 import { useNavigate } from "react-router-dom";
 
@@ -40,9 +40,6 @@ export const useFetchArticles = () => {
     }
   };
 
-  useEffect(() => {
-    fetchArticles();
-  }, []);
 
   return { articles, loading, error, totalPages, fetchArticles };
 };

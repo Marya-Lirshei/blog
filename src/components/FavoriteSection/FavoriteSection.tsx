@@ -19,15 +19,11 @@ const FavoriteSection: React.FC<TFavoriteSectionProps> = ({
 
     setIsLoading(true);
     try {
-      if (favorited) {
-        const article = await unFavoriteArticle(slug);
-        setFavoritesCount(article.favoritesCount);
-        setFavorited(article.favorited);
-      } else {
-        const article = await favoriteArticle(slug);
-        setFavoritesCount(article.favoritesCount);
-        setFavorited(article.favorited);
-      }
+      const article = favorited
+        ? await unFavoriteArticle(slug)
+        : await favoriteArticle(slug);
+      setFavorited(article.favorited);
+      setFavoritesCount(article.favoritesCount);
     } catch (error) {
       console.error("Error toggling favorite:", error);
     } finally {
