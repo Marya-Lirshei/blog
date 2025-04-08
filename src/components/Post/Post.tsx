@@ -34,7 +34,7 @@ const Post: React.FC<TPostProps> = ({
             slug={slug}
             favorited={favorited}
           />
-        </div>
+        </div> 
         <AuthorSection username={username} image={image} date={date} />
       </div>
       <div className={styles.tagsList}>

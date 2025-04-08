@@ -13,12 +13,13 @@ function HomePage() {
   const initialPage = parseInt(pageParam) || 1;
   const [currentPage, setCurrentPage] = useState(initialPage);
 
-  const { articles, loading, error, totalPages, fetchArticles } = useFetchArticles();
+  const { articles, loading, error, totalPages, fetchArticles } =
+    useFetchArticles();
 
   useEffect(() => {
     const offset = (currentPage - 1) * 20;
     fetchArticles(offset, 20);
-  }, [currentPage]);
+  }, [currentPage, fetchArticles]);
 
   if (loading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>Ошибка: {error}</div>;
@@ -39,7 +40,7 @@ function HomePage() {
             title={article.title}
             tagList={article.tagList}
             body={article.body}
-            description={article.description}//после тайтла
+            description={article.description} //после тайтла
             favorited={article.favorited}
             favoritesCount={article.favoritesCount}
             slug={article.slug}

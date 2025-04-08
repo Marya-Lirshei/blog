@@ -7,6 +7,7 @@ import { createArticle, updateArticle } from "../../components/Api/authApi";
 import { ArticleApiData, TCreateArticle } from "../../types/types";
 
 import styles from "./CreateArticlePage.module.css";
+import { nanoid } from "nanoid";
 
 const CreateArticle = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ const CreateArticle = () => {
     reset,
   } = useForm<TCreateArticle>({
     defaultValues: {
-      tagList: [{ id: Date.now().toString(), nameTag: "" }], // 1 пустой тег по умолчанию
+      tagList: [{ id: nanoid(), nameTag: "" }], // 1 пустой тег по умолчанию
     },
   });
 
@@ -40,8 +41,8 @@ const CreateArticle = () => {
     if (isEditMode && article) {
       reset({
         ...article,
-        tagList: article.tagList.map((tag: string, index: number) => ({
-          id: (Date.now() + index).toString(),
+        tagList: article.tagList.map((tag: string) => ({
+          id: nanoid(),
           nameTag: tag,
         })),
       });
@@ -76,21 +77,21 @@ const CreateArticle = () => {
 
   const showError = (message: string) => {
     setError(message);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setError("");
     }, 3000);
+    return () => clearTimeout(timer);
   };
 
   const addTag = () => {
     if (fields.length > 0) {
       const lastTagValue = watch(`tagList.${fields.length - 1}.nameTag`);
-      console.log("lastTagValue: ", lastTagValue);
       if (!lastTagValue?.trim()) {
         showError("Заполните текущий тег перед добавлением нового");
         return;
       }
     }
-    append({ id: Date.now().toString(), nameTag: "" });
+    append({ id: nanoid(), nameTag: "" });
   };
 
   return (

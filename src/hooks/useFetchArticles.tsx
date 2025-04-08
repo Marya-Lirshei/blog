@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { BaseURL } from "../components/Api/authApi";
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +10,9 @@ export const useFetchArticles = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const fetchArticles = async (offset = 0, limit = 20) => {
+  const fetchArticles = useCallback(async (offset = 0, limit = 20) => {
     try {
-      let token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("authToken");
       if (!token) {
         navigate("/sign-in");
         return;
@@ -38,7 +38,7 @@ export const useFetchArticles = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
 
   return { articles, loading, error, totalPages, fetchArticles };

@@ -69,3 +69,8 @@ export type TCreateArticle = {
   body: string;
   tagList: Array<{ id: string; nameTag: string }>;
 };
+
+export interface ErrorData {
+  message?: string;
+  errors?: Record<string, string[]>;
+}

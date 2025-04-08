@@ -4,6 +4,7 @@ import styles from "./SignInPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 import { fetchUserProfile, login } from "../../store/reducers/authSlice";
+import useErrorHandler from "../../hooks/useErrorHandler";
 
 const SignIn = () => {
   const {
@@ -13,15 +14,18 @@ const SignIn = () => {
   } = useForm<IFormData>({ mode: "onBlur" });
 
   const dispatch = useAppDispatch();
+  const { error, handleError, clearError } = useErrorHandler();
   const navigate = useNavigate();
 
   const onSubmit = async (userData: IFormData) => {
     try {
       await dispatch(login(userData)).unwrap();
       await dispatch(fetchUserProfile()).unwrap();
+      clearError()
       navigate("/");
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (err: any) {
+      handleError(err.status, err.data, err.message)
+     
     }
   };
 
@@ -69,6 +73,7 @@ const SignIn = () => {
           <div className={styles.formButton}>
             <input type="submit" value="Create" />
           </div>
+          {error && <p className={styles.errorMessage}>{error}</p>}
         </form>
         <div className={styles.signUpLink}>
           Don`t have an account?

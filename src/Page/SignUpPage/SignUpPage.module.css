@@ -113,3 +113,11 @@
 .signInText:hover {
   text-decoration: none;
 }
+
+.errorMessage {
+  padding: 10px;
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
+  border-radius: 5px;
+}

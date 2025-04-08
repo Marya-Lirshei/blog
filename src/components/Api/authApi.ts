@@ -7,6 +7,7 @@ export const registerUser = async (userData: IFormData) => {
   const response = await axios.post(`${BaseURL}users`, {
     user: userData,
   });
+  console.log('response: ', response);
   return response;
 };
 
@@ -56,7 +57,7 @@ export const updateArticle = async (
   slug: string,
   articleData: ArticleApiData
 ) => {
-  const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem("authToken");   
   if (!token) throw new Error("Authentication required");
   try {
     const response = await axios.put(

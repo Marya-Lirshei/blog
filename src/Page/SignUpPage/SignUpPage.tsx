@@ -4,6 +4,7 @@ import { IFormData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../store/reducers/authSlice";
 import { useAppDispatch } from "../../hooks/redux";
+import useErrorHandler from "../../hooks/useErrorHandler";
 
 const SignUp = () => {
   const {
@@ -14,16 +15,19 @@ const SignUp = () => {
   } = useForm<IFormData>({ mode: "onBlur" });
 
   const dispatch = useAppDispatch();
+  const { error, handleError, clearError } = useErrorHandler();
   const navigate = useNavigate();
 
   const onSubmit = async (userData: IFormData) => {
     try {
       await dispatch(register(userData)).unwrap();
+      clearError();
       navigate("/");
-    } catch (error) {
-      console.error("Registration failed:", error);
+    } catch (err: any) {
+      handleError(err.status, err.data, err.message); 
     }
   };
+
 
   const goToSignIn = () => {
     navigate("/sign-in");
@@ -131,6 +135,7 @@ const SignUp = () => {
           <div className={styles.formButton}>
             <input type="submit" value="Create" />
           </div>
+          {error && <p className={styles.errorMessage}>{error}</p>}
         </form>
         <div className={styles.signInLink}>
           Already have an account?
@@ -144,3 +149,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
