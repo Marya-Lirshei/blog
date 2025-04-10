@@ -7,9 +7,11 @@ import {
 import { IFormData } from "../../types/types";
 import { useForm } from "react-hook-form";
 import styles from "./ProfilePage.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
 
   const {
@@ -24,7 +26,7 @@ const Profile = () => {
 
   const handleUpdateProfile = (updatedData: Partial<IFormData>) => {
     dispatch(updateUserProfile(updatedData));
-    console.log(JSON.stringify(updatedData));
+    navigate("/")
   };
 
   if (!user) {

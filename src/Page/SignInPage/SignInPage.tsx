@@ -4,7 +4,11 @@ import styles from "./SignInPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 import { fetchUserProfile, login } from "../../store/reducers/authSlice";
-import useErrorHandler from "../../hooks/useErrorHandler";
+import { useState } from "react";
+
+interface ApiErrors {
+  [key: string]: string | string[];
+}
 
 const SignIn = () => {
   const {
@@ -13,19 +17,19 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<IFormData>({ mode: "onBlur" });
 
+  const [apiErrors, setApiErrors] = useState<ApiErrors | null>(null);
   const dispatch = useAppDispatch();
-  const { error, handleError, clearError } = useErrorHandler();
   const navigate = useNavigate();
 
   const onSubmit = async (userData: IFormData) => {
     try {
       await dispatch(login(userData)).unwrap();
       await dispatch(fetchUserProfile()).unwrap();
-      clearError()
+      setApiErrors({});
       navigate("/");
-    } catch (err: any) {
-      handleError(err.status, err.data, err.message)
-     
+    } catch (error: any) {
+      // @ts-ignore
+      setApiErrors(error.response.data.errors);
     }
   };
 
@@ -73,7 +77,12 @@ const SignIn = () => {
           <div className={styles.formButton}>
             <input type="submit" value="Create" />
           </div>
-          {error && <p className={styles.errorMessage}>{error}</p>}
+          {apiErrors &&
+            Object.entries(apiErrors).map(([key, value]) => (
+              <div key={key} className={styles.errorMessage}>
+                {key}: {Array.isArray(value) ? value.join(", ") : value}
+              </div>
+            ))}
         </form>
         <div className={styles.signUpLink}>
           Don`t have an account?

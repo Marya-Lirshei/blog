@@ -4,8 +4,14 @@ import { IFormData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../store/reducers/authSlice";
 import { useAppDispatch } from "../../hooks/redux";
-import useErrorHandler from "../../hooks/useErrorHandler";
+import { useState } from "react";
+// import { ignore } from "antd/es/theme/useToken";
+// import { handleError } from "../../hooks/useErrorHandler";
 
+
+interface ApiErrors {
+  [key: string]: string | string[];
+}
 const SignUp = () => {
   const {
     register: registerForm,
@@ -15,23 +21,32 @@ const SignUp = () => {
   } = useForm<IFormData>({ mode: "onBlur" });
 
   const dispatch = useAppDispatch();
-  const { error, handleError, clearError } = useErrorHandler();
   const navigate = useNavigate();
+
+  const [apiErrors, setApiErrors] = useState<ApiErrors| null>(null);
+  console.log('apiErrors: ', apiErrors);
 
   const onSubmit = async (userData: IFormData) => {
     try {
       await dispatch(register(userData)).unwrap();
-      clearError();
+      setApiErrors({});
       navigate("/");
-    } catch (err: any) {
-      handleError(err.status, err.data, err.message); 
+    } catch (error/* : ApiErrors */) {
+      // @ts-ignore
+      setApiErrors(error.response.data.errors);
     }
   };
 
+  console.log(apiErrors);
 
   const goToSignIn = () => {
     navigate("/sign-in");
   };
+
+  // const dd = {
+  //   username: "is already taken.",
+  //   email: "is already taken.",
+  // };
 
   return (
     <div className={styles.container}>
@@ -135,7 +150,11 @@ const SignUp = () => {
           <div className={styles.formButton}>
             <input type="submit" value="Create" />
           </div>
-          {error && <p className={styles.errorMessage}>{error}</p>}
+          {apiErrors && Object.entries(apiErrors).map(([key, value]) => (
+            <div key={key} className={styles.errorMessage}>
+              {key}: {Array.isArray(value) ? value.join(", ") : value}
+            </div>
+          ))}
         </form>
         <div className={styles.signInLink}>
           Already have an account?
@@ -149,4 +168,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

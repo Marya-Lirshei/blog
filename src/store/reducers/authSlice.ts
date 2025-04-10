@@ -6,7 +6,6 @@ import {
   registerUser,
   updateProfile,
 } from "../../components/Api/authApi"; // Объединила API в один файл
-import axios from "axios";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -15,17 +14,7 @@ export const login = createAsyncThunk(
       const token = await loginUser(userData);
       return token;
     } catch (error) {
-      if (axios.isAxiosError(error)) { 
-        return rejectWithValue({
-          message: error.message,
-          status: error.response?.status,
-          data: error.response?.data
-        });
-      }
-      return rejectWithValue({
-        message: "Произошла неизвестная ошибка",
-        status: 500
-      });
+      return rejectWithValue(error);
     }
   }
 );
@@ -33,21 +22,12 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   "auth/register",
   async (userData: IFormData, { rejectWithValue }) => {
+    
     try {
       const response = await registerUser(userData);
       return response.data.user.token;
     } catch (error) {
-      if (axios.isAxiosError(error)) { 
-        return rejectWithValue({
-          message: error.message,
-          status: error.response?.status,
-          data: error.response?.data
-        });
-      }
-      return rejectWithValue({
-        message: "Произошла неизвестная ошибка",
-        status: 500
-      });
+        return rejectWithValue(error);
     }
   }
 );
@@ -59,10 +39,7 @@ export const fetchUserProfile = createAsyncThunk(
       const user = await getProfile();
       return user;
     } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue("Произошла неизвестная ошибка");
+      return rejectWithValue(error);
     }
   }
 );
@@ -74,10 +51,7 @@ export const updateUserProfile = createAsyncThunk(
       const user = await updateProfile(userData);
       return user;
     } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue("Произошла неизвестная ошибка");
+      return rejectWithValue(error);
     }
   }
 );
@@ -110,6 +84,7 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isAuthenticated = true;
+        //@ts-ignore
         localStorage.setItem("authToken", action.payload);
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
